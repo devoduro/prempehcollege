@@ -13,9 +13,9 @@ trait HasWebpConversions
 {
     protected function webpConversions(): void
     {
-        $this->addMediaConversion('thumb')->fit(Fit::Crop, 480, 320)->format('webp')->nonQueued();
-        $this->addMediaConversion('card')->width(800)->format('webp')->nonQueued();
-        $this->addMediaConversion('large')->width(1600)->format('webp')->nonQueued();
+        $this->addMediaConversion('thumb')->nonQueued()->fit(Fit::Crop, 480, 320)->format('webp');
+        $this->addMediaConversion('card')->nonQueued()->width(800)->format('webp');
+        $this->addMediaConversion('large')->nonQueued()->width(1600)->format('webp');
     }
 
     public function registerMediaConversions(?Media $media = null): void

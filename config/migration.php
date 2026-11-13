@@ -50,5 +50,5 @@ return [
     ],
 
     // Text that marks purchased-theme placeholder copy; such pages are imported as drafts for review.
-    'demo_markers' => ['lorem ipsum', 'at vero eos', 'consecte tur', 'retail and leadership'],
+    'demo_markers' => ['lorem ipsum', 'at vero eos', 'consecte tur', 'retail and leadership', 'yaf ghana', 'young achievers foundation', 'wesleyan university', 'quayson', 'essential package', 'premier package'],
 ];

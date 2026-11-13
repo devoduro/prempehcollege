@@ -1,11 +1,103 @@
 @import 'tailwindcss';
+@import '@fontsource-variable/inter';
+@import '@fontsource/libre-baskerville/400.css';
+@import '@fontsource/libre-baskerville/700.css';
+@import 'swiper/css';
+@import 'swiper/css/pagination';
+@import 'swiper/css/navigation';
+@import 'swiper/css/effect-fade';
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 @source '../**/*.blade.php';
 @source '../**/*.js';
+@source '../../app/Support/*.php';
 
+/* Prempeh College brand tokens (see migration-work/BRAND.md). */
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --color-green-50: #eef8ef;
+    --color-green-100: #d7eedb;
+    --color-green-200: #b0dcb8;
+    --color-green-300: #7fc38d;
+    --color-green-400: #46a258;
+    --color-green-500: #238a2d;
+    --color-green-600: #1a7410;
+    --color-green-700: #115e03;
+    --color-green-800: #0a4f0a;
+    --color-green-900: #054716;
+    --color-green-950: #032a0d;
+    --color-sage: #2b7258;
+    --color-gold-50: #fff9e6;
+    --color-gold-100: #fff0c2;
+    --color-gold-300: #ffd866;
+    --color-gold-400: #ffc53a;
+    --color-gold-500: #f0b020;
+    --color-gold-600: #c48a0b;
+    --color-gold-700: #8f6407;
+    --color-ink: #0f1a12;
+    --color-paper: #faf8f3;
+    --font-sans: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --font-serif: 'Libre Baskerville', Georgia, serif;
+}
+
+@layer base {
+    html { scroll-behavior: smooth; }
+    body { background-color: var(--color-paper); color: var(--color-ink); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+    :focus-visible { outline: 3px solid var(--color-gold-400); outline-offset: 2px; }
+    [x-cloak] { display: none !important; }
+    @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+    }
+}
+
+@layer components {
+    .btn { @apply inline-flex items-center gap-2 rounded-md px-5 py-2.5 font-semibold transition-colors; }
+    .btn-gold { @apply bg-gold-400 text-green-950 hover:bg-gold-300; }
+    .btn-green { @apply bg-green-700 text-white hover:bg-green-900; }
+    .btn-ghost { @apply border-2 border-current; }
+    .eyebrow { @apply text-xs font-bold uppercase tracking-[0.14em] text-gold-600; }
+    .container-pc { @apply mx-auto max-w-7xl px-4; }
+
+    /* Swiper theming: gold dots and arrows on dark slides, green on light card sliders. */
+    .swiper { --swiper-theme-color: var(--color-gold-400); --swiper-pagination-bullet-inactive-color: #fff; --swiper-pagination-bullet-inactive-opacity: .5; --swiper-pagination-bullet-size: 10px; --swiper-navigation-size: 22px; }
+    .card-slider { --swiper-theme-color: var(--color-green-700); --swiper-pagination-bullet-inactive-color: var(--color-green-300); --swiper-pagination-bullet-inactive-opacity: .8; }
+    .hero-slider .swiper-button-next, .hero-slider .swiper-button-prev { @apply hidden h-12 w-12 rounded-full bg-green-950/50 text-gold-400 backdrop-blur-sm transition hover:bg-green-950/80 md:flex; }
+    .hero-slider .swiper-button-next::after, .hero-slider .swiper-button-prev::after { font-size: 18px; font-weight: 700; }
+    .hero-slider .swiper-pagination { bottom: 1.5rem !important; }
+    .card-slider .swiper-button-next, .card-slider .swiper-button-prev { @apply h-10 w-10 rounded-full bg-white text-green-800 shadow-md ring-1 ring-green-100; }
+    .card-slider .swiper-button-next::after, .card-slider .swiper-button-prev::after { font-size: 16px; font-weight: 700; }
+    .card-slider .swiper-pagination { position: static; margin-top: 1.5rem; }
+    .card-slider .swiper-slide { height: auto; }
+
+    /* Typography for migrated rich text. */
+    .prose-pc { @apply max-w-none text-lg leading-relaxed text-ink; }
+    .prose-pc > * + * { @apply mt-5; }
+    .prose-pc h2 { @apply mt-10 font-serif text-2xl font-bold text-green-900 md:text-3xl; }
+    .prose-pc h3 { @apply mt-8 font-serif text-xl font-bold text-green-900; }
+    .prose-pc h4, .prose-pc h5 { @apply mt-6 font-semibold text-green-900; }
+    .prose-pc a { @apply font-medium text-green-700 underline decoration-gold-400 decoration-2 underline-offset-2 hover:text-green-900; }
+    .prose-pc ul { @apply list-disc pl-6; }
+    .prose-pc ol { @apply list-decimal pl-6; }
+    .prose-pc li + li { @apply mt-1; }
+    .prose-pc blockquote { @apply border-l-4 border-gold-400 pl-4 italic text-green-950/80; }
+    .prose-pc figure img, .prose-pc p img, .prose-pc > img { @apply h-auto max-w-full rounded-lg; }
+    .prose-pc figcaption { @apply mt-2 text-sm text-green-950/60; }
+    .prose-pc hr { @apply border-green-100; }
+    .prose-pc table { @apply w-full border-collapse text-base; }
+    .prose-pc th, .prose-pc td { @apply border border-green-100 px-3 py-2 text-left; }
+    .prose-pc details { @apply rounded-lg border border-green-100 bg-white p-4; }
+    .prose-pc summary { @apply cursor-pointer font-semibold text-green-900; }
+    /* Pages that are only photos (staff and executive posters): a responsive grid of framed cards. */
+    .prose-pc.is-photo-page { @apply grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-4; }
+    .prose-pc.is-photo-page > * { @apply m-0; }
+    .prose-pc.is-photo-page figure { @apply overflow-hidden rounded-sm bg-white shadow-md ring-1 ring-green-100 transition hover:-translate-y-0.5 hover:shadow-xl; }
+    .prose-pc.is-photo-page figure img { @apply h-full w-full cursor-zoom-in rounded-none object-cover object-top; aspect-ratio: 3 / 4; }
+    /* A lone photo (e.g. one board poster) is shown large instead of as a tiny grid cell. */
+    .prose-pc.is-photo-page.is-single { @apply block; }
+    .prose-pc.is-photo-page.is-single figure img { @apply aspect-auto object-contain; max-height: 80vh; }
+    .pc-gallery { @apply grid grid-cols-2 gap-3 md:grid-cols-3; }
+    .pc-gallery figure { @apply m-0; }
+    .pc-gallery img { @apply aspect-[4/3] w-full cursor-zoom-in rounded-lg object-cover; }
+    .pc-video { @apply relative aspect-video w-full overflow-hidden rounded-lg bg-green-950; }
+    .pc-video iframe { @apply absolute inset-0 h-full w-full; }
 }

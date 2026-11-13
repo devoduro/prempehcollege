@@ -65,6 +65,8 @@ return [
                 // http://developers.whatwg.org/grouping-content.html
                 ['figure', 'Block', 'Optional: (figcaption, Flow) | (Flow, figcaption) | Flow', 'Common'],
                 ['figcaption', 'Inline', 'Flow', 'Common'],
+                ['details', 'Block', 'Flow', 'Common'],
+                ['summary', 'Block', 'Flow', 'Common'],
 
                 // http://developers.whatwg.org/the-video-element.html#the-video-element
                 ['video', 'Block', 'Optional: (source, Flow) | (Flow, source) | Flow', 'Common', [

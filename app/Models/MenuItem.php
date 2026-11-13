@@ -15,11 +15,13 @@ class MenuItem extends Model
         return ['is_visible' => 'boolean'];
     }
 
+    /** @return BelongsTo<Page, $this> */
     public function page(): BelongsTo
     {
         return $this->belongsTo(Page::class);
     }
 
+    /** @return HasMany<MenuItem, $this> */
     public function children(): HasMany
     {
         return $this->hasMany(self::class, 'parent_id')->orderBy('sort_order');

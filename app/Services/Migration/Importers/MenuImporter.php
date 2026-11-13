@@ -10,9 +10,7 @@ class MenuImporter
     /** WordPress nav_menu term id => new menu key. */
     private const MENUS = [47 => 'main', 44 => 'footer'];
 
-    public function __construct(private readonly ImportContext $ctx)
-    {
-    }
+    public function __construct(private readonly ImportContext $ctx) {}
 
     public function run(): void
     {
@@ -43,7 +41,7 @@ class MenuImporter
                         continue;
                     }
                     $pageId = $map->model_id;
-                    $label = $label !== '' ? $label : (string) $this->ctx->wp()->table('posts')->where('ID', $object)->value('post_title');
+                    $label = $label !== '' ? $label : html_entity_decode((string) $this->ctx->wp()->table('posts')->where('ID', $object)->value('post_title'));
                     $url = '';
                 } elseif ($type === 'taxonomy') {
                     $this->ctx->report->skipped('menu items', "\"$label\" (wp {$it->ID}) points at a category archive");

@@ -5,8 +5,8 @@ namespace App\Models;
 use App\Enums\ContentStatus;
 use App\Models\Concerns\HasWebpConversions;
 use App\Models\Concerns\IsPublishable;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use App\Models\Concerns\PurifiesBody;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -17,6 +17,12 @@ use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
+/**
+ * @property string|null $body
+ * @property ContentStatus $status
+ * @property-read string $path
+ * @property string|null $legacy_url
+ */
 class Post extends Model implements HasMedia
 {
     use HasFactory, InteractsWithMedia, IsPublishable, LogsActivity, PurifiesBody, SoftDeletes;

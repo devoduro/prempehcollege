@@ -16,7 +16,7 @@ it('sends hardening headers on every response', function () {
 it('rate limits the contact endpoint with Retry-After', function () {
     $this->withoutMiddleware(ValidateCsrfToken::class);
     foreach (range(1, 3) as $i) {
-        $this->post('/contact')->assertNoContent();
+        $this->post('/contact')->assertRedirect(); // fails validation, but still counts towards the limit
     }
     $this->post('/contact')->assertStatus(429)->assertHeader('Retry-After');
 });

@@ -12,9 +12,7 @@ use Throwable;
 
 class PostImporter
 {
-    public function __construct(private readonly ImportContext $ctx)
-    {
-    }
+    public function __construct(private readonly ImportContext $ctx) {}
 
     public function run(): void
     {

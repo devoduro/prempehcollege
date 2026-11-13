@@ -10,9 +10,7 @@ class MediaResolver
     /** @var array<string, array{alt:?string, title:?string}> */
     private array $attachmentMeta = [];
 
-    public function __construct(private readonly string $base)
-    {
-    }
+    public function __construct(private readonly string $base) {}
 
     /** Returns the path relative to wp-content/uploads, or null if the URL is not a site upload. */
     public function relative(string $url): ?string

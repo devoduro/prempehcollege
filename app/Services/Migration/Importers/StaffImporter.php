@@ -11,9 +11,7 @@ use Throwable;
 /** AWSM Team Pro: awsm_team posts are groups, awsm_team_member posts are people (mostly photo-only). */
 class StaffImporter
 {
-    public function __construct(private readonly ImportContext $ctx)
-    {
-    }
+    public function __construct(private readonly ImportContext $ctx) {}
 
     public function run(): void
     {

@@ -13,8 +13,7 @@ class MediaAttacher
         private readonly MediaResolver $resolver,
         private readonly MigrationReport $report,
         private readonly bool $dryRun,
-    ) {
-    }
+    ) {}
 
     public function attach(HasMedia&Model $model, string $relative, string $collection, ?string $alt = null): ?Media
     {

@@ -10,9 +10,7 @@ use App\Services\Migration\ImportContext;
 /** Builds 301 redirects from old WordPress paths and rewrites internal links inside migrated content. */
 class RedirectImporter
 {
-    public function __construct(private readonly ImportContext $ctx)
-    {
-    }
+    public function __construct(private readonly ImportContext $ctx) {}
 
     public function run(): void
     {

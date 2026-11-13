@@ -5,9 +5,7 @@ namespace App\Services\Migration;
 /** Cleans classic/Gutenberg post_content before it reaches the purifier. */
 class HtmlCleaner
 {
-    public function __construct(private readonly MigrationReport $report, private readonly ElementorParser $parser)
-    {
-    }
+    public function __construct(private readonly MigrationReport $report, private readonly ElementorParser $parser) {}
 
     public function clean(string $html, string $context): string
     {

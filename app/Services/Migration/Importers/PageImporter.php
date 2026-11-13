@@ -11,9 +11,7 @@ use Throwable;
 
 class PageImporter
 {
-    public function __construct(private readonly ImportContext $ctx)
-    {
-    }
+    public function __construct(private readonly ImportContext $ctx) {}
 
     public function run(): void
     {
@@ -65,9 +63,10 @@ class PageImporter
                 break;
             }
         }
-        if ($template !== 'home' && $plain === '') {
+        // Photo-only pages (executives, prefects) are real content; only truly empty pages are held back.
+        if ($template !== 'home' && $plain === '' && ! str_contains($html, '<img')) {
             $status = ContentStatus::Draft;
-            $this->ctx->report->note('Pages held as draft: no text content (images only or empty)', "\"$title\" (wp {$p->ID})");
+            $this->ctx->report->note('Pages held as draft: empty in WordPress (no text or images)', "\"$title\" (wp {$p->ID})");
         }
         $this->ctx->noteEncodingDamage($title, "page title wp {$p->ID}");
 

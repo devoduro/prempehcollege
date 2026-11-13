@@ -15,9 +15,7 @@ class ElementorParser
         'shortcode', 'menu-anchor', 'sidebar', 'google_maps', 'social-icons', 'counter', 'progress',
     ];
 
-    public function __construct(private readonly MigrationReport $report)
-    {
-    }
+    public function __construct(private readonly MigrationReport $report) {}
 
     /** @param  array<int, array<string, mixed>>  $tree */
     public function toHtml(array $tree, int $pageId): string
