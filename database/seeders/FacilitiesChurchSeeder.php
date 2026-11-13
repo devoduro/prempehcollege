@@ -19,7 +19,7 @@ class FacilitiesChurchSeeder extends Seeder
             ['dining-hall-and-kitchen', 'Dining Hall and School Kitchen', 'dining', 'Where boarders are fed each day, from the school kitchen to the dining hall.', false],
             ['school-clinic', 'School Clinic', 'health', 'First-aid and basic health care for students and staff on campus.', false],
             ['staff-common-room', 'Staff Common Room', 'staff', 'A shared space where teachers and staff meet, plan and rest between lessons.', false],
-            ['college-chapel', 'College Chapel', 'worship', 'The College chapel, a place of worship and reflection that has been part of campus life since the early years.', false],
+            ['basketball-court', 'Basketball Court', 'sports', 'The College basketball court, where students train, play and compete. Prempeh College was runners-up in the national Sprite Ball Championship in 2010.', false],
         ];
         foreach ($facilities as $i => [$slug, $name, $cat, $summary, $planned]) {
             Facility::firstOrCreate(['slug' => $slug], ['name' => $name, 'category' => $cat, 'summary' => $summary, 'is_planned' => $planned, 'is_active' => true, 'sort_order' => $i]);

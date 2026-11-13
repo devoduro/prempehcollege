@@ -7,7 +7,7 @@ use Database\Seeders\FacilitiesChurchSeeder;
 beforeEach(fn () => $this->seed(FacilitiesChurchSeeder::class));
 
 it('lists facilities and shows each one', function () {
-    $this->get('/facilities')->assertOk()->assertSee('Dining Hall and School Kitchen')->assertSee('School Clinic')->assertSee('Staff Common Room');
+    $this->get('/facilities')->assertOk()->assertSee('Dining Hall and School Kitchen')->assertSee('School Clinic')->assertSee('Staff Common Room')->assertSee('Basketball Court');
     $this->get('/facilities/school-clinic')->assertOk()->assertSee('More details coming soon');
     $this->get('/facilities/nope')->assertNotFound();
 });
