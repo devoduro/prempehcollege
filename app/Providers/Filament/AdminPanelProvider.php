@@ -2,17 +2,18 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Pages\Dashboard;
 use Filament\Auth\MultiFactor\App\AppAuthentication;
+use Filament\Enums\ThemeMode;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Navigation\NavigationGroup;
-use Filament\Pages\Dashboard;
+use Filament\Navigation\NavigationItem;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
-use Filament\Widgets\AccountWidget;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -37,10 +38,18 @@ class AdminPanelProvider extends PanelProvider
             )
             ->brandName('Prempeh College Admin')
             ->favicon(asset('images/favicon.png'))
+            // Light page with a dark sidebar, like jhs_portal; users can still switch themes from their menu.
+            ->defaultThemeMode(ThemeMode::Light)
             ->colors([
                 'primary' => Color::hex('#115e03'),
                 'warning' => Color::hex('#ffc53a'),
-                'gray' => Color::Stone,
+                'gray' => Color::Slate,
+            ])
+            // Dark slate sidebar and portal-style cards (see resources/css/filament/admin/theme.css).
+            ->viteTheme('resources/css/filament/admin/theme.css')
+            ->navigationItems([
+                NavigationItem::make('View website')->url(fn () => url('/'), shouldOpenInNewTab: true)
+                    ->icon('heroicon-o-globe-alt')->group('Site')->sort(99),
             ])
             ->navigationGroups([
                 NavigationGroup::make('Content'),
@@ -54,7 +63,6 @@ class AdminPanelProvider extends PanelProvider
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
             ->pages([Dashboard::class])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
-            ->widgets([AccountWidget::class])
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,

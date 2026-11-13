@@ -30,7 +30,7 @@ return [
         'about' => [['Our Houses', 'houses.index', 'The house system: histories, colours and housemasters.']],
         'leadership' => [['Prefects', 'prefects.index', 'Meet the prefectorial board, current and past.']],
         'academics' => [['Programmes & Course Combinations', 'programmes.index', 'Core subjects and elective combinations for every programme.']],
-        'student-life' => [['Our Houses', 'houses.index', 'Houses compete in sports, academics and service.'], ['Prefects', 'prefects.index', 'Student leaders who serve the College community.']],
+        'student-life' => [['Our Houses', 'houses.index', 'Houses compete in sports, academics and service.'], ['Prefects', 'prefects.index', 'Student leaders who serve the College community.'], ['Facilities', 'facilities.index', 'Dining hall, clinic, staff common room, chapel and more.'], ['Church life', 'church.index', 'Denominations, worship and church activities.']],
     ],
 
     // News posts in this category fill the "Headmaster's Desk" column on the home page.

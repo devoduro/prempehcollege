@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Models\Announcement;
+use App\Models\Denomination;
 use App\Models\Event as SchoolEvent;
+use App\Models\Facility;
 use App\Models\House;
 use App\Models\MenuItem;
 use App\Models\Page;
@@ -50,7 +52,7 @@ class AppServiceProvider extends ServiceProvider
         Gate::policy(Activity::class, ActivityPolicy::class);
 
         // Navigation and sitemap are cached; edits in the admin must show up straight away.
-        foreach ([Page::class, Post::class, MenuItem::class, SchoolEvent::class, Announcement::class, House::class, Programme::class, PrefectBoard::class] as $model) {
+        foreach ([Page::class, Post::class, MenuItem::class, SchoolEvent::class, Announcement::class, House::class, Programme::class, PrefectBoard::class, Facility::class, Denomination::class] as $model) {
             $model::saved(fn () => $this->flushContentCaches());
             $model::deleted(fn () => $this->flushContentCaches());
         }

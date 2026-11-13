@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Announcement;
+use App\Models\Denomination;
 use App\Models\Event;
+use App\Models\Facility;
 use App\Models\House;
 use App\Models\Page;
 use App\Models\Post;
@@ -39,6 +41,14 @@ class SitemapController extends Controller
             $urls[] = ['loc' => url('houses'), 'lastmod' => null];
             foreach (House::active()->get() as $h) {
                 $urls[] = ['loc' => url($h->path), 'lastmod' => $h->updated_at];
+            }
+            $urls[] = ['loc' => url('facilities'), 'lastmod' => null];
+            foreach (Facility::active()->get() as $f) {
+                $urls[] = ['loc' => url($f->path), 'lastmod' => $f->updated_at];
+            }
+            $urls[] = ['loc' => url('church-life'), 'lastmod' => null];
+            foreach (Denomination::active()->get() as $d) {
+                $urls[] = ['loc' => url($d->path), 'lastmod' => $d->updated_at];
             }
             $urls[] = ['loc' => url('programmes'), 'lastmod' => null];
             foreach (Programme::active()->get() as $p) {

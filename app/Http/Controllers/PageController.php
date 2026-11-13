@@ -87,7 +87,7 @@ class PageController extends Controller
             'pages' => $pages->where('slug', '!=', 'overview')->values(),
             'featured' => $featured,
             // The Academics hub lists every active programme with its core subjects and elective combinations.
-            'programmes' => $section === 'academics' ? Programme::active()->with('combinations')->get() : collect(),
+            'programmes' => $section === 'academics' ? Programme::active()->with(['combinations', 'media'])->get() : collect(),
         ]);
     }
 

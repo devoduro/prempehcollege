@@ -75,6 +75,25 @@
         </section>
     @endif
 
+    {{-- Campus facilities --}}
+    @if ($facilities->isNotEmpty())
+        <section class="py-16" aria-labelledby="facilities-heading">
+            <div class="container-pc">
+                <x-section-title id="facilities-heading" title="Campus Facilities" :href="route('facilities.index')" link-label="All facilities" />
+                <ul class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+                    @foreach ($facilities as $f)
+                        @php($cover = $f->getFirstMedia('cover') ?? $f->getFirstMedia('gallery'))
+                        <li class="group relative overflow-hidden rounded-sm bg-white shadow-md ring-1 ring-green-100 transition hover:-translate-y-0.5 hover:shadow-xl">
+                            @if ($cover)<img src="{{ \App\Support\Img::url($cover, 'card') }}" alt="" class="aspect-[16/10] w-full object-cover" loading="lazy" width="800" height="500">
+                            @else<div class="grid aspect-[16/10] place-items-center bg-gradient-to-br from-green-900 to-green-700" aria-hidden="true"><x-facility-icon :category="$f->category" class="h-12 w-12 text-gold-400/90" /></div>@endif
+                            <div class="border-t-4 border-gold-400 p-4"><h3 class="font-serif text-lg font-bold text-green-900"><a href="{{ url($f->path) }}" class="after:absolute after:inset-0 group-hover:underline">{{ $f->name }}</a></h3></div>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+        </section>
+    @endif
+
     {{-- 5. Programmes --}}
     @if ($programmeCards->isNotEmpty())
         <section class="container-pc py-16" aria-labelledby="programmes-heading">
@@ -83,7 +102,8 @@
                 @foreach ($programmeCards as $p)
                     @php($stat = $stats->first(fn ($s) => strcasecmp($s['programme'], $p->name) === 0))
                     <a href="{{ url($p->path) }}" class="group relative flex flex-col overflow-hidden rounded-sm bg-white p-6 shadow-md ring-1 ring-green-100 transition hover:-translate-y-0.5 hover:shadow-xl">
-                        <span class="absolute inset-x-0 top-0 h-1.5 bg-gold-400"></span>
+                        <span class="absolute inset-x-0 top-0 z-10 h-1.5 bg-gold-400"></span>
+                        @if ($pc = $p->getFirstMedia('cover'))<img src="{{ \App\Support\Img::url($pc, 'thumb') }}" alt="" class="-mx-6 -mt-6 mb-5 aspect-[3/2] max-w-none object-cover" style="width: calc(100% + 3rem)" loading="lazy" width="480" height="320">@endif
                         <h3 class="font-serif text-xl font-bold text-green-900">{{ $p->name }}</h3>
                         <p class="mt-3 flex-1 text-sm leading-relaxed text-green-950/80">{{ $p->summary }}</p>
                         @if ($stat)

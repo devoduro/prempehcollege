@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\DenominationController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\FacilityController;
 use App\Http\Controllers\FallbackController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HouseController;
@@ -31,6 +33,12 @@ Route::middleware('throttle:web')->group(function () use ($slug) {
 
     Route::get('/houses', [HouseController::class, 'index'])->name('houses.index');
     Route::get('/houses/{slug}', [HouseController::class, 'show'])->where('slug', $slug)->name('houses.show');
+
+    Route::get('/facilities', [FacilityController::class, 'index'])->name('facilities.index');
+    Route::get('/facilities/{slug}', [FacilityController::class, 'show'])->where('slug', $slug)->name('facilities.show');
+
+    Route::get('/church-life', [DenominationController::class, 'index'])->name('church.index');
+    Route::get('/church-life/{slug}', [DenominationController::class, 'show'])->where('slug', $slug)->name('church.show');
 
     Route::get('/programmes', [ProgrammeController::class, 'index'])->name('programmes.index');
     Route::get('/programmes/{slug}', [ProgrammeController::class, 'show'])->where('slug', $slug)->name('programmes.show');

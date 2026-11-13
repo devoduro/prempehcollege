@@ -38,7 +38,8 @@
             <ul class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
                 @foreach ($programmes as $pr)
                     <li class="group relative flex flex-col overflow-hidden rounded-sm bg-white p-6 shadow-md ring-1 ring-green-100 transition hover:-translate-y-0.5 hover:shadow-xl">
-                        <span class="absolute inset-x-0 top-0 h-1.5 bg-gold-400"></span>
+                        <span class="absolute inset-x-0 top-0 z-10 h-1.5 bg-gold-400"></span>
+                        @if ($pc = $pr->getFirstMedia('cover'))<img src="{{ \App\Support\Img::url($pc, 'thumb') }}" alt="" class="-mx-6 -mt-6 mb-5 aspect-[3/2] max-w-none object-cover" style="width: calc(100% + 3rem)" loading="lazy" width="480" height="320">@endif
                         <h3 class="font-serif text-xl font-bold text-green-900"><a href="{{ url($pr->path) }}" class="after:absolute after:inset-0 group-hover:underline">{{ $pr->name }}</a></h3>
                         <p class="mt-3 flex-1 text-sm leading-relaxed text-green-950/80">{{ $pr->summary }}</p>
                         <p class="mt-4 text-xs font-semibold uppercase tracking-wide text-green-800">{{ $pr->combinations->count() ? $pr->combinations->count().' elective '.\Illuminate\Support\Str::plural('combination', $pr->combinations->count()) : 'Core subjects & combinations' }}</p>

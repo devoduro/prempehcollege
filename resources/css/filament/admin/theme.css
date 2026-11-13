@@ -1,0 +1,29 @@
+@import '../../../../vendor/filament/filament/resources/css/theme.css';
+
+@source '../../../../app/Filament/**/*';
+@source '../../../../resources/views/filament/**/*';
+
+/*
+ * Look and feel borrowed from the jhs_portal dashboard: a dark slate sidebar, soft grey page background,
+ * white cards with a hairline ring, and flat two-tone coloured tiles. Brand green and gold stay the accent colours.
+ */
+.fi-body { background-color: #f1f5f9; }
+.dark .fi-body { background-color: #0b1120; }
+
+/* Dark slate sidebar */
+.fi-sidebar { background-color: #0f172a; border-inline-end: 1px solid #1e293b; box-shadow: none; }
+.fi-sidebar-header { background-color: #0f172a; border-bottom: 1px solid #1e293b; box-shadow: none; }
+.fi-sidebar-header .fi-logo, .fi-sidebar-header a { color: #ffffff; }
+.fi-sidebar-nav { scrollbar-width: thin; scrollbar-color: #334155 transparent; }
+.fi-sidebar-group-label { color: #94a3b8; letter-spacing: .08em; text-transform: uppercase; font-size: .68rem; }
+.fi-sidebar-group-btn .fi-icon, .fi-sidebar-group-collapse-btn { color: #64748b; }
+.fi-sidebar-item-btn { border-radius: .5rem; color: #cbd5e1; transition: background-color .15s, color .15s; }
+.fi-sidebar-item-btn .fi-sidebar-item-label, .fi-sidebar-item-btn .fi-sidebar-item-icon { color: #cbd5e1; }
+.fi-sidebar-item-btn:hover { background-color: #1e293b; }
+.fi-sidebar-item-btn:hover .fi-sidebar-item-label, .fi-sidebar-item-btn:hover .fi-sidebar-item-icon { color: #ffffff; }
+.fi-sidebar-item.fi-active > .fi-sidebar-item-btn { background-color: rgba(255, 255, 255, .1); box-shadow: inset 3px 0 0 #ffc53a; }
+.fi-sidebar-item.fi-active .fi-sidebar-item-label, .fi-sidebar-item.fi-active .fi-sidebar-item-icon { color: #ffffff; }
+.fi-sidebar-item-badge-ctn .fi-badge { background-color: #ffc53a; color: #032a0d; }
+
+/* Cards: white, hairline ring, small radius, like the portal */
+.fi-section, .fi-wi-widget .fi-section, .fi-ta-ctn { border-radius: .375rem; }

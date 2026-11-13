@@ -23,6 +23,9 @@
                         </div>
                         <div class="grid gap-8 p-6 lg:grid-cols-2">
                             <div>
+                                @if ($pcover = $p->getFirstMedia('cover'))
+                                    <img src="{{ \App\Support\Img::url($pcover, 'card') }}" alt="{{ $p->name }} programme" class="mb-5 aspect-[16/9] w-full rounded-sm object-cover shadow-md" loading="lazy" width="800" height="450">
+                                @endif
                                 @if ($p->summary)<p class="text-lg text-green-950/90">{{ $p->summary }}</p>@endif
                                 @if ($p->core_subjects)
                                     <h3 class="mt-5 text-xs font-bold uppercase tracking-widest text-gold-600">Core subjects</h3>

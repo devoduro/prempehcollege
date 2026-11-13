@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Announcement;
 use App\Models\Event;
+use App\Models\Facility;
 use App\Models\HeroSlide;
 use App\Models\House;
 use App\Models\Page;
@@ -47,6 +48,7 @@ class HomeController extends Controller
                 ->paginate(2, ['*'], 'events_page')->fragment('events-announcements'),
             'slides' => HeroSlide::active()->with('media')->get(),
             'houses' => House::active()->with('media')->get(),
+            'facilities' => Facility::active()->where('is_planned', false)->with('media')->take(4)->get(),
             'programmeCards' => Programme::active()->with('media')->get(),
             'board' => PrefectBoard::published()->with('media')->orderByDesc('is_current')->orderByDesc('academic_year')->first(),
             'stats' => $stats,
