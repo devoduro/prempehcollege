@@ -2,7 +2,7 @@
 
 return [
     'name' => 'Prempeh College',
-    'founded' => 1940,
+    'founded' => 1949,
     'location' => 'Kumasi, Ghana',
     'phone' => env('SITE_PHONE', '+233 20 463 1807'),
     'email' => env('SITE_EMAIL'),
