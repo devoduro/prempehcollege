@@ -24,7 +24,9 @@ it('hides inactive entries and is idempotent', function () {
     $this->get('/church-life/methodist')->assertNotFound();
 });
 
-it('puts facilities on the home page and in the sitemap', function () {
+it('keeps facilities off the home page for now, but brings them back with the switch, and keeps them in the sitemap', function () {
+    $this->get('/')->assertOk()->assertDontSee('Campus Facilities');
+    config(['site.show_facilities_on_home' => true]);
     $this->get('/')->assertOk()->assertSee('Campus Facilities');
     $this->get('/sitemap.xml')->assertSee('/facilities/school-clinic')->assertSee('/church-life/methodist');
 });

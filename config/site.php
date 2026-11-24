@@ -20,9 +20,14 @@ return [
             ['value' => '5', 'label' => 'National Robotics Championships', 'detail' => 'A record five wins between 2013 and 2021'],
             ['value' => '2016', 'label' => 'Robofest Toyota Innovation Award', 'detail' => 'World Championships in Michigan, USA'],
             ['value' => '2', 'label' => 'National Debate Championships', 'detail' => 'Won in 1997 and 2004'],
+            // Milo count comes from a regional results table (2003, 2004, 2013): confirm with the sports department before relying on it.
+            ['value' => '3', 'label' => 'Ashanti Milo Soccer Championships', 'detail' => 'Regional champions in 2003, 2004 and 2013'],
             ['value' => '296', 'label' => 'Students admitted to KNUST in 2012', 'detail' => 'The most from any one senior high school'],
         ],
     ],
+
+    // Home page sections that are switched off for now. Set to true to bring the Campus Facilities row back.
+    'show_facilities_on_home' => false,
 
     'phone' => env('SITE_PHONE', '+233 20 463 1807'),
     'email' => env('SITE_EMAIL'),

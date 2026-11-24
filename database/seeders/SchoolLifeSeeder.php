@@ -102,7 +102,7 @@ class SchoolLifeSeeder extends Seeder
             $board = PrefectBoard::firstOrCreate(['slug' => str_replace('/', '-', $year)], [
                 'name' => $year.' Prefectorial Board',
                 'academic_year' => $year,
-                'description' => 'Photographs from the old website. Add names and positions in the admin when ready.',
+                'description' => 'Names, positions and photographs of the prefects will be published here soon.',
                 'is_current' => false,
                 'is_published' => true,
             ]);

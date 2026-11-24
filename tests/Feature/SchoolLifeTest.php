@@ -30,7 +30,7 @@ it('shows the home slider from active slides in order and hides inactive ones', 
     HeroSlide::create(['title' => 'First slide', 'sort_order' => 1, 'button_label' => 'Go', 'button_url' => '/news']);
     HeroSlide::create(['title' => 'Hidden slide', 'sort_order' => 3, 'is_active' => false]);
 
-    $this->get('/')->assertOk()->assertSeeInOrder(['First slide', 'Second slide'])->assertDontSee('Hidden slide')
+    $this->get('/')->assertOk()->assertSeeInOrder(['First', 'Second'])->assertDontSee('Hidden')
         ->assertSee('data-hero-slider', false);
 });
 

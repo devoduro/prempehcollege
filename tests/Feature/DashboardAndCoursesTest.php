@@ -55,6 +55,7 @@ it('adds STEM as a programme with a photo, and covers for every programme', func
     $this->get('/programmes')->assertOk()->assertSee('STEM')->assertSee('Visual Arts')->assertSee('programme', false);
 });
 
-it('links to the admin dashboard from the site footer', function () {
-    $this->get('/')->assertOk()->assertSee('Staff login (admin)')->assertSee(url('/admin'), false);
+it('keeps the admin login out of the public footer', function () {
+    $this->get('/')->assertOk()->assertDontSee('Staff login')->assertDontSee(url('/admin'), false);
+    $this->get('/admin/login')->assertOk();
 });

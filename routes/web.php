@@ -9,6 +9,8 @@ use App\Http\Controllers\FallbackController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HouseController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\OsaController;
+use App\Http\Controllers\OsaPrintController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PrefectController;
 use App\Http\Controllers\ProgrammeController;
@@ -49,6 +51,17 @@ Route::middleware('throttle:web')->group(function () use ($slug) {
     // The old year-group photo pages now live under /prefects.
     Route::redirect('/people', '/prefects', 301);
     Route::get('/people/{slug}', fn (string $slug) => redirect('/prefects/'.(ctype_digit($slug) ? ((int) $slug - 1).'-'.$slug : $slug), 301))->where('slug', $slug);
+
+    Route::get('/old_boys', [OsaController::class, 'home'])->name('osa.home');
+    Route::redirect('/old-students', '/old_boys', 301);
+    Route::get('/old-students/meetings/{token}', [OsaController::class, 'legacy'])->where('token', '[A-Za-z0-9]{32}');
+    $osaSlug = '[a-z0-9]+(?:-[a-z0-9]+)*';
+    Route::get('/old_boys/{slug}', [OsaController::class, 'register'])->where('slug', $osaSlug)->name('osa.register');
+    Route::post('/old_boys/{slug}', [OsaController::class, 'store'])->where('slug', $osaSlug)->middleware('throttle:osa-register')->name('osa.store');
+    Route::get('/old_boys/{slug}/thanks', [OsaController::class, 'thanks'])->where('slug', $osaSlug)->name('osa.thanks');
+
+    Route::get('/osa/print/meetings/{event}/qr', [OsaPrintController::class, 'qr'])->whereNumber('event')->name('osa.print.qr');
+    Route::get('/osa/print/meetings/{event}/attendance', [OsaPrintController::class, 'attendance'])->whereNumber('event')->name('osa.print.attendance');
 
     Route::get('/contact', [ContactController::class, 'show'])->name('contact');
     Route::post('/contact', [ContactController::class, 'store'])->middleware('throttle:contact')->name('contact.store');

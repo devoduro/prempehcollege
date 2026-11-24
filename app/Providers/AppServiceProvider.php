@@ -48,7 +48,7 @@ class AppServiceProvider extends ServiceProvider
         }
 
         // Super admins pass every policy check; everyone else goes through App\Policies.
-        Gate::before(fn (User $user) => $user->is_active && $user->hasRole('super-admin') ? true : null);
+        Gate::before(fn ($user) => $user instanceof User && $user->is_active && $user->hasRole('super-admin') ? true : null);
         Gate::policy(Activity::class, ActivityPolicy::class);
 
         // Navigation and sitemap are cached; edits in the admin must show up straight away.
@@ -90,6 +90,11 @@ class AppServiceProvider extends ServiceProvider
         RateLimiter::for('login', fn (Request $r) => [
             Limit::perMinute(5)->by(strtolower((string) $r->input('email')).'|'.$ip($r)),
             Limit::perHour(20)->by($ip($r)),
+        ]);
+
+        RateLimiter::for('osa-register', fn (Request $r) => [
+            Limit::perMinute(10)->by($ip($r)),
+            Limit::perHour(60)->by($ip($r)),
         ]);
 
         RateLimiter::for('contact', fn (Request $r) => [

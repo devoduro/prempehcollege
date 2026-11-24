@@ -76,6 +76,7 @@
                     @endforeach
                 </div>
             @endif
+            @include('partials.osa-meetings')
         </article>
 
         <aside class="space-y-8 lg:sticky lg:top-28 lg:self-start" aria-label="Related">

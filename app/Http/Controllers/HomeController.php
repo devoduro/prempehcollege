@@ -37,7 +37,15 @@ class HomeController extends Controller
             ->when($desk, fn ($q) => $q->whereKeyNot($desk->id))
             ->latest('published_at')->take(4)->get();
 
+        // Photo strip: the Home page gallery first, then club photos (robotics, NSMQ), unique and not tiny.
+        $strip = collect($home?->getMedia('gallery') ?? [])->skip(1)
+            ->concat(Page::with('media')->whereIn('slug', ['robotics-club', 'nsmq-team'])->orderBy('id')->get()
+                ->flatMap(fn ($p) => $p->getMedia('gallery')->concat($p->getMedia('content'))))
+            ->filter(fn ($m) => str_starts_with((string) $m->mime_type, 'image/') && $m->size > 60000)
+            ->unique('file_name')->take(24)->values();
+
         return view('pages.home', [
+            'strip' => $strip,
             'page' => $home,
             'hero' => $home?->getMedia('gallery') ?? collect(),
             'news' => $news,

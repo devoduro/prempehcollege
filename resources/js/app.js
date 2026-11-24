@@ -31,6 +31,56 @@ document.addEventListener('click', (event) => {
     button.replaceWith(iframe);
 });
 
+// One-row scroller with arrow buttons (home achievements): scrolls by roughly one card, keeps native swipe and keyboard scrolling.
+document.querySelectorAll('[data-scroll-row]').forEach((wrap) => {
+    const track = wrap.querySelector('[data-scroll-track]');
+    const prev = wrap.querySelector('[data-scroll-prev]');
+    const next = wrap.querySelector('[data-scroll-next]');
+    if (!track) return;
+    const step = () => Math.max(260, track.clientWidth * 0.8);
+    const update = () => {
+        const max = track.scrollWidth - track.clientWidth - 2;
+        if (prev) prev.disabled = track.scrollLeft <= 2;
+        if (next) next.disabled = track.scrollLeft >= max;
+    };
+    prev?.addEventListener('click', () => track.scrollBy({ left: -step(), behavior: 'smooth' }));
+    next?.addEventListener('click', () => track.scrollBy({ left: step(), behavior: 'smooth' }));
+    track.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+
+    // Optional slow drift (data-autoscroll): stops on hover, focus or touch, and never runs for visitors who prefer reduced motion.
+    if (track.hasAttribute('data-autoscroll') && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        let paused = false;
+        let rest = 0;
+        let pos = track.scrollLeft;
+        const stop = () => { paused = true; };
+        const go = () => { paused = false; pos = track.scrollLeft; };
+        ['pointerenter', 'focusin', 'touchstart'].forEach((e) => wrap.addEventListener(e, stop, { passive: true }));
+        ['pointerleave', 'focusout', 'touchend'].forEach((e) => wrap.addEventListener(e, go, { passive: true }));
+        let last = performance.now();
+        const tick = (now) => {
+            const dt = now - last;
+            last = now;
+            const max = track.scrollWidth - track.clientWidth;
+            if (!paused && document.visibilityState === 'visible' && max > 0) {
+                if (rest > 0) {
+                    rest -= dt;
+                } else if (pos >= max - 1) {
+                    rest = 2200;
+                    pos = 0;
+                    track.scrollTo({ left: 0, behavior: 'smooth' });
+                } else {
+                    pos = Math.min(max, pos + dt * 0.04);
+                    track.scrollLeft = pos;
+                }
+            }
+            requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+    }
+});
+
 // Sliders (Swiper). Autoplay is switched off for visitors who prefer reduced motion.
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 

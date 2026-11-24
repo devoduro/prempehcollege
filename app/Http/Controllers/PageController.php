@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\OsaEvent;
 use App\Models\Page;
 use App\Models\Post;
 use App\Models\Programme;
@@ -101,6 +102,12 @@ class PageController extends Controller
         $people = $page->staffGroup?->members()->where('is_published', true)->with('media')->get() ?? collect();
 
         $data = ['page' => $page, 'siblings' => $siblings, 'people' => $people, 'groupKind' => $page->staffGroup?->kind];
+
+        // The Old Boys Association page lists the AGM and other association meetings, each linking to its registration page.
+        if ($page->section === 'about' && $page->slug === 'old-boys-association') {
+            $data['osaEvents'] = OsaEvent::withCount('attendances')->where('starts_at', '>=', now()->subMonths(12))->orderByDesc('starts_at')->limit(6)->get()
+                ->sortBy(fn ($e) => [$e->starts_at->isPast() ? 1 : 0, $e->starts_at->isPast() ? -$e->starts_at->timestamp : $e->starts_at->timestamp])->values();
+        }
 
         if ($page->template === 'mission') {
             // The sections headed "Vision" and "Mission" become the two large cards; anything else stays as normal text.

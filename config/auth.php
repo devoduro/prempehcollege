@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\OsaAdmin;
 use App\Models\User;
 
 return [
@@ -42,6 +43,12 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+
+        // Old Students Association portal admins (separate accounts from the school website admins).
+        'osa' => [
+            'driver' => 'session',
+            'provider' => 'osa_admins',
+        ],
     ],
 
     /*
@@ -65,6 +72,11 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => env('AUTH_MODEL', User::class),
+        ],
+
+        'osa_admins' => [
+            'driver' => 'eloquent',
+            'model' => OsaAdmin::class,
         ],
 
         // 'users' => [
