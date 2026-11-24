@@ -2,7 +2,7 @@
 @php
     $siteName = config('site.name');
     $fullTitle = $title ? $title.' | '.$siteName : $siteName.' | '.config('site.location');
-    $desc = $description ?: 'Prempeh College, Kumasi: a boys\' secondary school founded in '.config('site.founded').', known for academic excellence, NSMQ titles and robotics.';
+    $desc = $description ?: 'Prempeh College, Kumasi: an all-boys public boarding senior high school founded in '.config('site.founded').' by Asanteman, the Methodist and Presbyterian churches and the colonial government. Known for academic excellence, NSMQ titles and robotics.';
 @endphp
 <!doctype html>
 <html lang="en">
@@ -42,6 +42,7 @@
     </main>
 
     @include('partials.footer')
+    @include('partials.quick-links')
 
     <dialog id="lightbox" class="m-auto max-h-[90vh] max-w-[95vw] bg-transparent p-0 backdrop:bg-black/80" aria-label="Image viewer">
         <img src="" alt="" class="max-h-[90vh] max-w-[95vw] rounded-lg object-contain">

@@ -111,7 +111,7 @@
                 <ul class="grid gap-5 sm:grid-cols-2 xl:grid-cols-3" aria-label="{{ $page->title }}">
                     @foreach ($people as $i => $person)
                         {{-- The head of a body (first person of Management, or a lone chairman) is featured across two columns --}}
-                        <x-profile-card :person="$person" :lead="$i === 0 && ($people->count() === 1 || $page->slug === 'management')" />
+                        <x-profile-card :person="$person" :lead="$people->count() === 1" />
                     @endforeach
                 </ul>
                 @if (trim(strip_tags((string) $page->body)) !== '')

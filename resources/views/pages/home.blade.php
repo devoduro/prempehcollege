@@ -7,42 +7,43 @@
 @endphp
 <x-layouts.app :image="$firstSlide ? \App\Support\Img::url($firstSlide, 'large') : ($heroImg ? \App\Support\Img::url($heroImg, 'large') : null)">
 
-    {{-- 1. Slider (managed in the admin: Site > Home slider) --}}
-    @if ($slides->isNotEmpty())
-        <x-hero-slider :slides="$slides" />
-    @else
-        <section class="relative overflow-hidden bg-green-950 text-white">
-            @if ($heroImg)<img src="{{ \App\Support\Img::url($heroImg, 'large') }}" alt="" class="absolute inset-0 h-full w-full object-cover opacity-35" width="1600" height="900" fetchpriority="high">@endif
-            <div class="absolute inset-0 bg-gradient-to-r from-green-950 via-green-950/85 to-green-950/20"></div>
-            <div class="container-pc relative py-24 md:py-32">
-                <p class="eyebrow !text-gold-400">Est. {{ config('site.founded') }} &middot; {{ config('site.location') }}</p>
-                <h1 class="mt-4 max-w-3xl font-serif text-4xl font-bold leading-tight md:text-6xl">A storied tradition of <span class="text-gold-400">academic excellence</span></h1>
-            </div>
-            <div class="h-2 bg-gold-400"></div>
-        </section>
-    @endif
-    <h1 class="sr-only">{{ config('site.name') }}, {{ config('site.location') }}</h1>
+    {{-- 1. Hero (photos managed in the admin: Site > Home slider) with the headline numbers --}}
+    @php
+        $facts = config('site.facts');
+        $heroStats = [
+            ['value' => (now()->year - config('site.founded')).'+', 'label' => 'Years of excellence'],
+            ['value' => number_format(floor($facts['students'] / 100) * 100).'+', 'label' => 'Students'],
+            ['value' => $facts['houses'], 'label' => 'Houses'],
+            ['value' => $programmeCards->count(), 'label' => 'Programmes'],
+        ];
+    @endphp
+    <x-hero-slider :slides="$slides" :fallback="$heroImg ? \App\Support\Img::url($heroImg, 'large') : null" :stats="$heroStats" />
 
-    {{-- 2. Fast facts (all counts come from the database) --}}
-    <section class="border-b border-green-100 bg-white" aria-label="At a glance">
-        <dl class="container-pc grid grid-cols-2 gap-6 py-8 text-center md:grid-cols-4">
-            <div><dt class="text-xs font-bold uppercase tracking-widest text-green-800">Founded</dt><dd class="mt-1 font-serif text-4xl font-bold text-green-900">{{ config('site.founded') }}</dd></div>
-            <div><dt class="text-xs font-bold uppercase tracking-widest text-green-800">Programmes</dt><dd class="mt-1 font-serif text-4xl font-bold text-green-900">{{ $programmeCards->count() }}</dd></div>
-            @if ($houses->isNotEmpty())
-                <div><dt class="text-xs font-bold uppercase tracking-widest text-green-800">Houses</dt><dd class="mt-1 font-serif text-4xl font-bold text-green-900">{{ $houses->count() }}</dd></div>
-            @endif
-            <div><dt class="text-xs font-bold uppercase tracking-widest text-green-800">Years of legacy</dt><dd class="mt-1 font-serif text-4xl font-bold text-green-900">{{ now()->year - config('site.founded') }}</dd></div>
-        </dl>
+    {{-- 2. Achievements (source: Wikipedia, see config/site.php) --}}
+    <section class="border-b border-green-100 bg-white py-12" aria-labelledby="achievements-heading">
+        <div class="container-pc">
+            <p class="eyebrow text-center">Pride of Kumasi</p>
+            <h2 id="achievements-heading" class="mt-2 text-center font-serif text-3xl font-bold text-green-900">Champions in the classroom and beyond</h2>
+            <ul class="mt-9 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+                @foreach ($facts['achievements'] as $a)
+                    <li class="border-t-4 border-gold-400 bg-green-50 p-5 text-center">
+                        <p class="font-serif text-4xl font-bold text-green-900">{{ $a['value'] }}</p>
+                        <p class="mt-2 text-sm font-bold text-green-900">{{ $a['label'] }}</p>
+                        <p class="mt-1 text-xs text-green-950/70">{{ $a['detail'] }}</p>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
     </section>
 
     {{-- 3. About us --}}
     <section class="container-pc grid items-center gap-10 py-16 lg:grid-cols-2" aria-labelledby="about-heading">
         <div>
             <p class="eyebrow">About us</p>
-            <h2 id="about-heading" class="mt-2 font-serif text-3xl font-bold text-green-900 md:text-4xl">A rich and storied history of quality education</h2>
+            <h2 id="about-heading" class="mt-2 font-serif text-3xl font-bold text-green-900 md:text-4xl">A tradition of character, learning and service</h2>
             <div class="prose-pc mt-5 !text-base">
-                <p>Prempeh College has a rich and storied history of providing quality education in Ghana. Over the years, our school has evolved and grown, adapting to the changing needs of students and embracing innovative teaching methods.</p>
-                <p>Since our founding in {{ config('site.founded') }}, the College has redrawn and redefined the boundaries of intellectual and creative thought as a preeminent academic centre.</p>
+                <p>Prempeh College is an {{ strtolower($facts['type']) }} in Kumasi, Ashanti Region. It opened on 5 February {{ config('site.founded') }}, founded by {{ $facts['founding_bodies'] }}, and is named after {{ $facts['namesake'] }}, who donated the land.</p>
+                <p>The campus was designed in 1948 by the British modernist architects {{ $facts['architects'] }}. Today about {{ number_format(floor($facts['students'] / 100) * 100) }} students live and learn here under the motto &ldquo;{{ $facts['motto'] }}&rdquo;, wearing the school colours of {{ strtolower($facts['colours']) }}, and are known as the <em>{{ $facts['nickname'] }}</em>.</p>
             </div>
             <div class="mt-7 flex flex-wrap gap-3">
                 <a href="{{ url('about') }}" class="btn btn-green">About the College</a>
@@ -171,4 +172,27 @@
             </div>
         </section>
     @endif
+
+    {{-- 10. Call to action and support --}}
+    <div class="-mb-16">
+        <section class="bg-gradient-to-br from-green-800 via-green-900 to-green-950 py-16 text-center text-white" aria-labelledby="cta-heading">
+            <div class="container-pc">
+                <h2 id="cta-heading" class="font-serif text-4xl font-bold md:text-5xl">Start Your Journey Today</h2>
+                <p class="mx-auto mt-5 max-w-xl text-xl font-light text-green-50">Join Prempeh College and become one of the Amanfoɔ shaping Ghana&rsquo;s future.</p>
+                <div class="mt-9 flex flex-wrap justify-center gap-4">
+                    <a href="{{ url(config('site.links.admission') && ! preg_match('~^https?://~', config('site.links.admission')) ? config('site.links.admission') : 'academics/overview') }}" class="inline-flex rounded-full bg-white px-8 py-4 font-bold text-green-900 shadow-xl transition hover:bg-gold-100">Apply for Admission</a>
+                    <a href="{{ route('contact') }}" class="inline-flex rounded-full border-2 border-white/50 px-8 py-4 font-bold text-white transition hover:border-white hover:bg-white/10">Contact Us</a>
+                </div>
+            </div>
+        </section>
+        <section class="bg-gradient-to-br from-gold-400 via-gold-500 to-gold-400 py-16 pb-28 text-center text-green-950" aria-labelledby="support-heading">
+            <div class="container-pc">
+                <p class="inline-block rounded-full bg-white/25 px-4 py-1 text-xs font-extrabold uppercase tracking-[0.12em]">Support our mission</p>
+                <h2 id="support-heading" class="mt-4 font-serif text-4xl font-bold md:text-5xl">Partner With Us in Excellence</h2>
+                <p class="mx-auto mt-5 max-w-2xl text-lg">Prempeh College is growing. Your support helps us improve our facilities, support our students and continue a legacy of character and learning.</p>
+                <a href="{{ route('contact') }}" class="mt-8 inline-flex items-center gap-2 rounded-full bg-ink px-8 py-4 font-bold text-white shadow-xl transition hover:bg-green-950">Support the College <svg aria-hidden="true" class="h-4 w-4 text-red-500" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 2.6 5 6 5c2 0 3.4 1.1 4.2 2.4h.1C11.1 6.1 12.5 5 14.5 5 17.9 5 19.6 8.4 18.1 11.8 16 16.400 12 21 12 21z"/></svg></a>
+                <p class="mt-5 text-sm">Or support by spreading the word <strong>#SupportPrempeh</strong></p>
+            </div>
+        </section>
+    </div>
 </x-layouts.app>

@@ -37,8 +37,15 @@ const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').match
 // Full-width home slider: gentle cross-fade, loops, pauses on hover and while the pointer or focus is inside.
 document.querySelectorAll('[data-hero-slider]').forEach((el) => {
     const slides = el.querySelectorAll('.swiper-slide').length;
+    const bar = el.querySelector('.hero-progress');
     new Swiper(el, {
         modules: [Autoplay, Pagination, Navigation, EffectFade, A11y, Keyboard],
+        on: {
+            // Gold progress bar: fills as the time before the next slide runs out.
+            autoplayTimeLeft(swiper, timeLeft, percentage) {
+                if (bar) bar.style.transform = `scaleX(${1 - percentage})`;
+            },
+        },
         effect: 'fade',
         fadeEffect: { crossFade: true },
         loop: slides > 1,

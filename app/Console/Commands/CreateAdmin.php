@@ -10,7 +10,7 @@ use Illuminate\Validation\Rules\Password;
 
 class CreateAdmin extends Command
 {
-    protected $signature = 'admin:create {email} {--name=} {--role=super-admin}';
+    protected $signature = 'admin:create {email} {--name=} {--role=super-admin} {--password= : Password to set; if omitted you are asked for it}';
 
     protected $description = 'Create (or update) an admin account. The password is asked for and never shown.';
 
@@ -24,7 +24,8 @@ class CreateAdmin extends Command
         }
 
         $email = strtolower(trim((string) $this->argument('email')));
-        $password = (string) $this->secret('Password (min 12 chars, upper and lower case, a number)');
+        // --password is handy locally, but it lands in shell history; omit it on shared or live machines.
+        $password = (string) ($this->option('password') ?: $this->secret('Password (min 12 chars, upper and lower case, a number)'));
 
         $v = Validator::make(['email' => $email, 'password' => $password], [
             'email' => ['required', 'email:rfc'],

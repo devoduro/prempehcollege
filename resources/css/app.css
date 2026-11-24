@@ -50,6 +50,9 @@
     }
 }
 
+@keyframes hero-zoom { from { transform: scale(1); } to { transform: scale(1.12); } }
+@keyframes hero-rise { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+
 @layer components {
     .btn { @apply inline-flex items-center gap-2 rounded-md px-5 py-2.5 font-semibold transition-colors; }
     .btn-gold { @apply bg-gold-400 text-green-950 hover:bg-gold-300; }
@@ -63,7 +66,17 @@
     .card-slider { --swiper-theme-color: var(--color-green-700); --swiper-pagination-bullet-inactive-color: var(--color-green-300); --swiper-pagination-bullet-inactive-opacity: .8; }
     .hero-slider .swiper-button-next, .hero-slider .swiper-button-prev { @apply hidden h-12 w-12 rounded-full bg-green-950/50 text-gold-400 backdrop-blur-sm transition hover:bg-green-950/80 md:flex; }
     .hero-slider .swiper-button-next::after, .hero-slider .swiper-button-prev::after { font-size: 18px; font-weight: 700; }
-    .hero-slider .swiper-pagination { bottom: 1.5rem !important; }
+    .hero-slider .swiper-pagination { bottom: 1.25rem !important; }
+    .hero-slider .swiper-pagination-bullet { width: 10px; height: 10px; transition: width .3s; }
+    .hero-slider .swiper-pagination-bullet-active { width: 28px; border-radius: 9999px; }
+    /* Slow zoom on the photo and staggered rise of the text for the visible slide. */
+    .hero-slider .hero-photo { transform: scale(1); }
+    .hero-slider .swiper-slide-active .hero-photo { animation: hero-zoom 9s ease-out both; }
+    .hero-slider .swiper-slide-active .hero-text > * { animation: hero-rise .8s cubic-bezier(.2,.7,.2,1) both; }
+    .hero-slider .swiper-slide-active .hero-text > :nth-child(2) { animation-delay: .12s; }
+    .hero-slider .swiper-slide-active .hero-text > :nth-child(3) { animation-delay: .24s; }
+    .hero-slider .swiper-slide-active .hero-text > :nth-child(4) { animation-delay: .36s; }
+    .hero-slider .hero-progress { transform: scaleX(0); }
     .card-slider .swiper-button-next, .card-slider .swiper-button-prev { @apply h-10 w-10 rounded-full bg-white text-green-800 shadow-md ring-1 ring-green-100; }
     .card-slider .swiper-button-next::after, .card-slider .swiper-button-prev::after { font-size: 16px; font-weight: 700; }
     .card-slider .swiper-pagination { position: static; margin-top: 1.5rem; }
