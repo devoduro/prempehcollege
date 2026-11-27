@@ -29,7 +29,7 @@ class OsaRecentCheckins extends TableWidget
             ->columns([
                 TextColumn::make('name')->weight('bold'),
                 TextColumn::make('event.title')->label('Meeting'),
-                TextColumn::make('year_completed')->label('Year'),
+                TextColumn::make('year_completed')->label('Year group'),
                 TextColumn::make('house.name')->label('House')->placeholder('—'),
                 TextColumn::make('sms_status')->label('SMS')->badge()->color($badge),
                 TextColumn::make('email_status')->label('Email')->badge()->color($badge),

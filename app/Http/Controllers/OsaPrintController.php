@@ -40,7 +40,7 @@ class OsaPrintController extends Controller
         if ($request->query('format') === 'csv') {
             return response()->streamDownload(function () use ($rows) {
                 $out = fopen('php://output', 'w');
-                fputcsv($out, ['No', 'Name', 'Year completed', 'House', 'Email', 'Phone', 'SMS', 'Email status', 'Checked in']);
+                fputcsv($out, ['No', 'Name', 'Year group', 'House', 'Email', 'Phone', 'SMS', 'Email status', 'Checked in']);
                 foreach ($rows as $i => $a) {
                     // Guard against spreadsheet formula injection from member-typed text.
                     $safe = fn (string $v) => preg_match('/^[=+\-@\t\r]/', $v) ? "'".$v : $v;

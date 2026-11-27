@@ -7,7 +7,7 @@ use Filament\Widgets\ChartWidget;
 
 class OsaYearChart extends ChartWidget
 {
-    protected ?string $heading = 'Members by year completed';
+    protected ?string $heading = 'Members by year group';
 
     protected static ?int $sort = 5;
 

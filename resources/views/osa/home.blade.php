@@ -30,7 +30,7 @@
                             <h3 class="font-serif text-lg font-bold text-green-950">{{ $x->name }}</h3>
                             <p class="text-sm font-semibold text-green-800">{{ $x->position }}</p>
                             <p class="mt-1 text-xs text-green-950/60">
-                                {{ collect([$x->chapter, $x->year_completed ? 'Class of '.$x->year_completed : null, $x->house?->name])->filter()->implode(' · ') }}
+                                {{ collect([$x->chapter, $x->year_completed ? 'Year group '.$x->year_completed : null, $x->house?->name])->filter()->implode(' · ') }}
                             </p>
                             @if ($x->bio)<p class="mt-2 text-sm text-green-950/80">{{ $x->bio }}</p>@endif
                         </div>

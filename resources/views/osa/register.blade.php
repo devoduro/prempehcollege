@@ -20,8 +20,8 @@
                         @error('name')<p class="mt-1 text-sm text-red-700">{{ $message }}</p>@enderror
                     </div>
                     <div>
-                        <label for="year_completed" class="block text-sm font-semibold text-green-950">Year completed</label>
-                        <input id="year_completed" name="year_completed" type="number" min="1930" max="{{ date('Y') }}" value="{{ old('year_completed') }}" required inputmode="numeric" placeholder="e.g. 2005" class="mt-1 w-full rounded-sm border border-green-200 px-3 py-2">
+                        <label for="year_completed" class="block text-sm font-semibold text-green-950">Year group</label>
+                        <input id="year_completed" name="year_completed" type="number" min="1930" max="{{ date('Y') }}" value="{{ old('year_completed') }}" required inputmode="numeric" placeholder="e.g. 2016" class="mt-1 w-full rounded-sm border border-green-200 px-3 py-2">
                         @error('year_completed')<p class="mt-1 text-sm text-red-700">{{ $message }}</p>@enderror
                     </div>
                     <div>

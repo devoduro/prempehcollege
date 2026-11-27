@@ -28,13 +28,13 @@
 <div class="sub"><strong>{{ $event->title }}</strong> · {{ $event->starts_at->format('j F Y, g:i A') }}@if ($event->venue) · {{ $event->venue }}@endif · <strong>{{ $rows->count() }}</strong> present</div>
 <div class="chips">
     @if ($houseName)<span>House: {{ $houseName }}</span>@endif
-    @if (filled($filters['year_from'] ?? null) || filled($filters['year_to'] ?? null))<span>Year completed: {{ $filters['year_from'] ?? 'any' }} to {{ $filters['year_to'] ?? 'any' }}</span>@endif
+    @if (filled($filters['year_from'] ?? null) || filled($filters['year_to'] ?? null))<span>Year group: {{ $filters['year_from'] ?? 'any' }} to {{ $filters['year_to'] ?? 'any' }}</span>@endif
     @if (filled($filters['sms'] ?? null))<span>SMS: {{ $filters['sms'] }}</span>@endif
     @if (filled($filters['email'] ?? null))<span>Email: {{ $filters['email'] }}</span>@endif
     @if (filled($filters['search'] ?? null))<span>Search: {{ $filters['search'] }}</span>@endif
 </div>
 <table>
-    <thead><tr><th>#</th><th>Name</th><th>Year</th><th>House</th><th>Phone</th><th>Email</th><th>Checked in</th><th class="sign">Signature</th></tr></thead>
+    <thead><tr><th>#</th><th>Name</th><th>Year group</th><th>House</th><th>Phone</th><th>Email</th><th>Checked in</th><th class="sign">Signature</th></tr></thead>
     <tbody>
     @forelse ($rows as $i => $a)
         <tr><td>{{ $i + 1 }}</td><td>{{ $a->name }}</td><td>{{ $a->year_completed }}</td><td>{{ $a->house?->name }}</td><td>{{ $a->phone }}</td><td>{{ $a->email }}</td><td>{{ $a->checked_in_at->format('j M, g:i A') }}</td><td></td></tr>

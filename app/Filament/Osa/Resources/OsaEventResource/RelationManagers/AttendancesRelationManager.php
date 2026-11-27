@@ -31,7 +31,7 @@ class AttendancesRelationManager extends RelationManager
     {
         return $schema->columns(2)->components([
             TextInput::make('name')->required()->maxLength(150)->columnSpanFull(),
-            TextInput::make('year_completed')->label('Year completed')->required()->numeric()->minValue(1930)->maxValue((int) date('Y')),
+            TextInput::make('year_completed')->label('Year group')->required()->numeric()->minValue(1930)->maxValue((int) date('Y')),
             Select::make('house_id')->label('House')->required()->options(fn () => House::orderBy('name')->pluck('name', 'id'))->searchable(),
             TextInput::make('email')->email()->required()->maxLength(190),
             TextInput::make('phone')->tel()->required()->maxLength(20)
@@ -50,7 +50,7 @@ class AttendancesRelationManager extends RelationManager
             ->defaultSort('checked_in_at', 'desc')
             ->columns([
                 TextColumn::make('name')->searchable()->weight('bold'),
-                TextColumn::make('year_completed')->label('Year')->sortable(),
+                TextColumn::make('year_completed')->label('Year group')->sortable(),
                 TextColumn::make('house.name')->label('House')->placeholder('—'),
                 TextColumn::make('email')->searchable()->toggleable(),
                 TextColumn::make('phone')->searchable(),
@@ -61,10 +61,10 @@ class AttendancesRelationManager extends RelationManager
             ])
             ->filters([
                 SelectFilter::make('house_id')->label('House')->options(fn () => House::orderBy('name')->pluck('name', 'id')),
-                Filter::make('year')->label('Year completed')
+                Filter::make('year')->label('Year group')
                     ->schema([
-                        TextInput::make('year_from')->label('Completed from')->numeric()->minValue(1930),
-                        TextInput::make('year_to')->label('Completed to')->numeric()->maxValue((int) date('Y')),
+                        TextInput::make('year_from')->label('Year group from')->numeric()->minValue(1930),
+                        TextInput::make('year_to')->label('Year group to')->numeric()->maxValue((int) date('Y')),
                     ])->columns(2)
                     ->query(fn ($query, array $data) => $query
                         ->when(filled($data['year_from'] ?? null), fn ($q) => $q->where('year_completed', '>=', (int) $data['year_from']))

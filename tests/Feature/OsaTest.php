@@ -230,7 +230,7 @@ it('downloads the filtered attendance as a safe CSV', function () {
     $csv = $res->streamedContent();
 
     expect($res->headers->get('content-type'))->toContain('text/csv')
-        ->and($csv)->toContain('Name,"Year completed"')->toContain("'=HYPERLINK")->not->toContain(',=HYPERLINK');
+        ->and($csv)->toContain('Name,"Year group"')->toContain("'=HYPERLINK")->not->toContain(',=HYPERLINK');
 });
 
 it('renders the dashboard with real figures and charts', function () {

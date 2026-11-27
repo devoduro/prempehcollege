@@ -12,7 +12,7 @@
             <tr><td style="padding:6px 0;color:#557">Meeting</td><td style="padding:6px 0"><strong>{{ $attendance->event->title }}</strong></td></tr>
             <tr><td style="padding:6px 0;color:#557">Date</td><td style="padding:6px 0">{{ $attendance->event->starts_at->format('l, j F Y \a\t g:i A') }}</td></tr>
             @if ($attendance->event->venue)<tr><td style="padding:6px 0;color:#557">Venue</td><td style="padding:6px 0">{{ $attendance->event->venue }}</td></tr>@endif
-            <tr><td style="padding:6px 0;color:#557">Year completed</td><td style="padding:6px 0">{{ $attendance->year_completed }}</td></tr>
+            <tr><td style="padding:6px 0;color:#557">Year group</td><td style="padding:6px 0">{{ $attendance->year_completed }}</td></tr>
             @if ($attendance->house)<tr><td style="padding:6px 0;color:#557">House</td><td style="padding:6px 0">{{ $attendance->house->name }}</td></tr>@endif
             <tr><td style="padding:6px 0;color:#557">Checked in</td><td style="padding:6px 0">{{ $attendance->checked_in_at->format('j M Y, g:i A') }}</td></tr>
         </table>

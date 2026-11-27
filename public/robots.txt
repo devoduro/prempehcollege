@@ -1,4 +1,4 @@
 User-agent: *
 Disallow: /search
 
-Sitemap: https://prempehcollege.edu.gh/sitemap.xml
+Sitemap: https://prempehcollegelmf.org/sitemap.xml

@@ -39,7 +39,7 @@ class OsaExecutiveResource extends Resource
             Section::make('Executive')->columnSpan(2)->columns(2)->schema([
                 TextInput::make('name')->required()->maxLength(150),
                 TextInput::make('position')->required()->maxLength(150)->placeholder('National President'),
-                TextInput::make('year_completed')->numeric()->minValue(1930)->maxValue((int) date('Y')),
+                TextInput::make('year_completed')->label('Year group')->numeric()->minValue(1930)->maxValue((int) date('Y')),
                 Select::make('house_id')->label('House')->options(fn () => House::orderBy('name')->pluck('name', 'id'))->searchable(),
                 TextInput::make('chapter')->maxLength(100)->placeholder('Global')->helperText('Optional grouping, for example Global, Accra or UK.'),
                 TextInput::make('sort_order')->numeric()->minValue(0)->default(0),
@@ -63,7 +63,7 @@ class OsaExecutiveResource extends Resource
                 TextColumn::make('name')->searchable()->weight('bold'),
                 TextColumn::make('position')->searchable(),
                 TextColumn::make('chapter')->placeholder('—'),
-                TextColumn::make('year_completed')->label('Year')->placeholder('—'),
+                TextColumn::make('year_completed')->label('Year group')->placeholder('—'),
                 TextColumn::make('house.name')->label('House')->placeholder('—'),
                 IconColumn::make('is_active')->boolean()->label('Shown'),
             ])

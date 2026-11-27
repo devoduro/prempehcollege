@@ -50,7 +50,7 @@ class OsaController extends Controller
             'house_id' => ['required', 'integer', 'exists:houses,id'],
             'email' => ['required', 'email:rfc', 'max:190'],
             'phone' => ['required', 'string', 'regex:/^\+?[0-9 ]{9,15}$/'],
-        ], ['phone.regex' => 'Enter a valid phone number, for example 0244123456.']);
+        ], ['phone.regex' => 'Enter a valid phone number, for example 0244123456.'], ['year_completed' => 'year group']);
 
         $result = $service->checkIn($event, $data);
 
